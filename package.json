@@ -1,0 +1,16 @@
+{
+  "name": "printshare",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Self-hosted PDF print sharing server (runs on your own laptop)",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "multer": "^2.0.2",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "3.11.174"
+  }
+}

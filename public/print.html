@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Print document</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/print.css">
+<style id="pageStyles"></style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-printer" viewBox="0 0 24 24"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></symbol>
+    <symbol id="i-width" viewBox="0 0 24 24"><polyline points="7 8 3 12 7 16"/><polyline points="17 8 21 12 17 16"/><line x1="3" y1="12" x2="21" y2="12"/></symbol>
+    <symbol id="i-page" viewBox="0 0 24 24"><path d="M15 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="15 3 15 8 20 8"/></symbol>
+  </defs>
+</svg>
+
+<div id="app" hidden>
+  <header class="bar">
+    <div class="brand"><img src="/favicon.svg" alt="" width="30" height="30"><span>PrintShare</span></div>
+    <div class="doc">
+      <div id="docName" class="doc-name"></div>
+      <div id="docMeta" class="doc-meta"></div>
+    </div>
+    <button id="printBtn" class="print-btn" type="button"><svg class="ic"><use href="#i-printer"/></svg><span>Print Document</span></button>
+  </header>
+
+  <div class="toolbar">
+    <div class="grp">
+      <button class="tb" id="prev" title="Previous page" aria-label="Previous page"><svg class="ic"><use href="#i-left"/></svg></button>
+      <input id="pageNum" type="text" inputmode="numeric" value="1" aria-label="Page number">
+      <span class="of">of <b id="pageTotal">1</b></span>
+      <button class="tb" id="next" title="Next page" aria-label="Next page"><svg class="ic"><use href="#i-right"/></svg></button>
+    </div>
+    <div class="grp">
+      <button class="tb" id="zoomOut" title="Zoom out" aria-label="Zoom out"><svg class="ic"><use href="#i-minus"/></svg></button>
+      <span id="zoomLabel" class="zoom">100%</span>
+      <button class="tb" id="zoomIn" title="Zoom in" aria-label="Zoom in"><svg class="ic"><use href="#i-plus"/></svg></button>
+      <button class="tb" id="fitWidth" title="Fit width" aria-label="Fit width"><svg class="ic"><use href="#i-width"/></svg></button>
+      <button class="tb" id="fitPage" title="Fit whole page" aria-label="Fit whole page"><svg class="ic"><use href="#i-page"/></svg></button>
+    </div>
+    <label class="mode">Print method
+      <select id="printMode">
+        <option value="auto">Automatic (recommended)</option>
+        <option value="native">Original PDF (sharpest)</option>
+        <option value="raster">High-resolution images (compatibility)</option>
+      </select>
+    </label>
+  </div>
+
+  <main id="stage" class="stage"><div class="sheet"><canvas id="canvas"></canvas></div></main>
+</div>
+
+<section id="gate" class="center" hidden>
+  <form id="gateForm" class="card" autocomplete="off">
+    <img src="/favicon.svg" alt="" width="44" height="44">
+    <h1>This document is password protected</h1>
+    <p>Ask the sender for the password.</p>
+    <input id="gatePw" type="password" placeholder="Password" required autocomplete="off">
+    <p id="gateErr" class="err" role="alert"></p>
+    <button class="print-btn wide" type="submit">Open document</button>
+  </form>
+</section>
+
+<section id="msg" class="center" hidden>
+  <div class="card">
+    <img src="/favicon.svg" alt="" width="44" height="44">
+    <h1 id="msgTitle"></h1>
+    <p id="msgText"></p>
+  </div>
+</section>
+
+<div id="busy" class="busy" hidden>
+  <div class="busy-card"><div class="spin"></div><p id="busyText">Preparing…</p><div class="prog"><div id="busyBar"></div></div></div>
+</div>
+
+<div id="wm" class="wm" aria-hidden="true"></div>
+<div id="shield" class="shield"><p>Content hidden while this window is not active.<br><small>Click here to continue.</small></p></div>
+
+<div id="printRoot" aria-hidden="true"></div>
+
+<script src="/vendor/pdfjs/pdf.min.js"></script>
+<script src="/print.js"></script>
+</body>
+</html>
